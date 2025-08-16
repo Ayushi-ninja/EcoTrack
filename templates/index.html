@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Carbon Emission Optimizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        input {
+            padding: 8px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>AI Carbon Emission Optimizer</h2>
+
+    <label for="co">CO Emission (kg per person): </label>
+    <input type="number" id="co" placeholder="Enter CO emission"><br>
+
+    <label for="ch4">CH4 Emission (kg per person): </label>
+    <input type="number" id="ch4" placeholder="Enter CH4 emission"><br>
+
+    <button onclick="predictEmission()">Predict CO2</button>
+    <button onclick="optimizeEmission()">Optimize Emissions</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+        async function predictEmission() {
+            let co = document.getElementById("co").value;
+            let ch4 = document.getElementById("ch4").value;
+
+            let response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ co: co, ch4: ch4 })
+            });
+
+            let data = await response.json();
+            document.getElementById("result").innerText = "Predicted CO2 Emission: " + data["Predicted CO2 Emission"];
+        }
+
+        async function optimizeEmission() {
+            let co = document.getElementById("co").value;
+            let ch4 = document.getElementById("ch4").value;
+
+            let response = await fetch('/optimize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ co: co, ch4: ch4 })
+            });
+
+            let data = await response.json();
+            document.getElementById("result").innerText = `Optimized CO: ${data["Optimized CO"]}, CH4: ${data["Optimized CH4"]}, CO2: ${data["Optimized CO2 Emission"]}`;
+        }
+    </script>
+
+</body>
+</html>
