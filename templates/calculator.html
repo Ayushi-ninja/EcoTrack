@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Carbon Emission Optimizer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI',
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+      background: linear-gradient(135deg, #dcedc8, #a5d6a7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #388e3c;
+
+      /* background: #003366;*/
+      color: white;
+      display: block;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: #ffcc00;
+    }
+
+
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #1b5e20;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #388e3c;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4caf50;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    button:first-child {
+      background: #4caf50;
+      color: white;
+    }
+
+    .opt-btn {
+      background: #1e88e5;
+      color: white;
+    }
+
+    .result-box {
+      margin-top: 15px;
+      padding: 12px;
+      background: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      border: 1px solid #c8e6c9;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+      background: #f5f9f6;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 15px 0;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #1b5e20;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #1b5e20;
+    }
+
+    #result {
+      margin-top: 20px;
+      color: #333;
+    }
+
+    /* Trees */
+    .tree-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tree {
+      position: absolute;
+      width: 80px;
+      height: 100px;
+      opacity: 0.9;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Left Tree */
+    .tree-left {
+      left: -60px;
+      bottom: 50px;
+      animation-delay: 0s;
+    }
+
+    /* Right Tree */
+    .tree-right {
+      right: -60px;
+      bottom: 80px;
+      animation-delay: 2s;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(2deg);
+      }
+
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">EcoTrack</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="connect.html" class="active">Connect</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>🌍 EcoTrack - Carbon Emission Optimizer</h1>
+    <p class="subtitle">Enter your data to predict and optimize emissions</p>
+
+    <div class="card">
+      <label for="co">CO Emission (kg per person):</label>
+      <input type="number" id="co" placeholder="Enter CO emission">
+
+      <label for="ch4">CH4 Emission (kg per person):</label>
+      <input type="number" id="ch4" placeholder="Enter CH4 emission">
+
+      <div class="btn-group">
+        <button onclick="predictEmission()">🔎 Predict CO₂</button>
+        <button class="opt-btn" onclick="optimizeEmission()">⚡ Optimize</button>
+      </div>
+
+      <div id="result" class="result-box">Results will appear here...</div>
+    </div>
+  </div>
+
+  <div class="tree-container">
+    <img src="tree2.webp" alt="Tree Left" class="tree tree-left">
+    <img src="tree2.webp" alt="Tree Right" class="tree tree-right">
+  </div>
+
+  <script>
+    async function predictEmission() {
+      let co = document.getElementById("co").value;
+      let ch4 = document.getElementById("ch4").value;
+
+      let response = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ co: co, ch4: ch4 })
+      });
+
+      let data = await response.json();
+      document.getElementById("result").innerText =
+        "🌱 Predicted CO₂ Emission: " + data["Predicted CO2 Emission"] + " kg";
+    }
+
+    async function optimizeEmission() {
+      let co = document.getElementById("co").value;
+      let ch4 = document.getElementById("ch4").value;
+
+      let response = await fetch('/optimize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ co: co, ch4: ch4 })
+      });
+
+      let data = await response.json();
+      document.getElementById("result").innerText =
+        `⚡ Optimized CO: ${data["Optimized CO"]} | CH₄: ${data["Optimized CH4"]} | CO₂: ${data["Optimized CO2 Emission"]} kg`;
+    }
+  </script>
+
+</body>
+
+</html>
